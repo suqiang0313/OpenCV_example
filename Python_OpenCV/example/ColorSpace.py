@@ -1,17 +1,23 @@
+# extract color channel
 import cv2 as cv
 import numpy as np 
-src = cv.imread("../../CPP_OpenCV/img/Lena.jpg")
-h,w = src.shape[:2]
-center = (w//2,h//2)
-M = cv.getRotationMatrix2D(center,90,1)
-src = cv.warpAffine(src, M, (w, h))
-#cv.imwrite('Lena.jpg',src)
-#cv.namedWindow("input",cv.WINDOW_AUTOSIZE)
+src = cv.imread("Adela.jpeg")
+src = cv.resize(src,(500,500))
 cv.imshow("lena",src)
 gray = cv.cvtColor(src,cv.COLOR_RGB2GRAY)
-cv.imshow("gray_lena",gray)
+cv.imshow("gray",gray)
 hsv = cv.cvtColor(src,cv.COLOR_RGB2HSV)
-cv.imshow("hsv_lena",hsv)
+cv.imshow("hsv",hsv)
+yuv  = cv.cvtColor(src,cv.COLOR_RGB2YUV)
+cv.imshow("yuv",yuv)
+YCrCb = cv.cvtColor(src,cv.COLOR_BGR2YCrCb)
+cv.imshow("YCrCb",YCrCb)
+src2 = cv.imread("tina_green.png")
+cv.imshow("src2",src2)
+hsv = cv.cvtColor(src2,cv.COLOR_RGB2HSV)
+mask = cv.inRange(hsv,(35,43,46),(77,255,255))
+dst = np.zeros(src2.shape)
+dst = cv.bitwise_and(src2,src2,dst,mask=mask)
+cv.imshow("dst",dst)
 cv.waitKey(0)
-cv.destroyAllWindows()
 
